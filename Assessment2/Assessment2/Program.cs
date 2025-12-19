@@ -1,5 +1,5 @@
+using Assessment2.Api.Validators;
 using Assessment2.Application;
-using Assessment2.Application.Validators;
 using Assessment2.Domain;
 using Assessment2.Infrastructure;
 using FluentValidation;
@@ -19,18 +19,21 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.InvalidModelStateResponseFactory = context =>
     {
         var errors = context.ModelState
-            .Where(e => e.Value.Errors.Count > 0)
-            .Select(e => e.Value.Errors.First().ErrorMessage)
+            .Where(x => x.Value.Errors.Any())
+            .SelectMany(x => x.Value.Errors)
+            .Select(e => e.ErrorMessage)
             .ToList();
 
-        var response = ApiResponse<string>.Fail(
-            string.Join(" | ", errors),
-            "VALIDATION_ERROR"
+        var response = ApiResponse<object>.Fail(
+            message: "Validation failed",
+            code: "400, Bad Request",
+            details: errors
         );
 
         return new BadRequestObjectResult(response);
     };
 });
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

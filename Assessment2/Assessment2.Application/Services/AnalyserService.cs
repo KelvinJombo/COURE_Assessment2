@@ -22,7 +22,7 @@ namespace Assessment2.Application.Services
             var country = _inMemoryDatabase.GetCountryByCode(prefix);
 
             if (country == null)
-                return ApiResponse<DecodeResponseDto>.Fail("Country code not found", "COUNTRY NOT FOUND");
+                return ApiResponse<DecodeResponseDto>.Fail("Country code not found", "404, COUNTRY NOT FOUND");
 
             var details = _inMemoryDatabase.GetDetailsByCountryId(country.Id)
                 .Select(d => new CountryDetailsDto

@@ -2,7 +2,7 @@
 using FluentValidation;
  
 
-namespace Assessment2.Application.Validators
+namespace Assessment2.Api.Validators
 {   
 
     public class DecodeNumberRequestValidator : AbstractValidator<DecodeNumberRequest>

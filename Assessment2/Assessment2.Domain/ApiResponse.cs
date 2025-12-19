@@ -4,8 +4,8 @@
     {
         public bool Success { get; set; }
         public string Message { get; set; }   
-        public T Data { get; set; }           
-        public ApiError Error { get; set; }   
+        public T? Data { get; set; }           
+        public ApiError? Error { get; set; }   
 
         public static ApiResponse<T> Ok(T data, string message = "OK")
         {
