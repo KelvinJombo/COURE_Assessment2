@@ -20,6 +20,11 @@ namespace Assessment2.Controllers
         public IActionResult Decode([FromBody] DecodeNumberRequest request)
         {
             var result = _analyserService.DecodeNumber(request.PhoneNumber);
+
+            if (!result.Success)
+                return NotFound(result);
+
+
             return Ok(result);
         }
 
